@@ -13,6 +13,11 @@ import java.io.IOException;
 @WebServlet("/board/insert")
 public class InsertController extends HttpServlet {
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+       resp.sendRedirect("/board/insertForm.jsp" );
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
         resp.setContentType("text/html;charset=utf-8");
@@ -22,13 +27,12 @@ public class InsertController extends HttpServlet {
         String content = req.getParameter("content");
 
         Board board = new Board();
-        board.setTitle(writer);
+        board.setWriter(writer);
         board.setTitle(title);
         board.setContent(content);
 
         BoardDao dao = new BoardDao();
-        dao.insert(board);
-        resp.sendRedirect("home.jsp");
+            dao.insert(board);
+        resp.sendRedirect("/home.jsp");
     }
-
 }
